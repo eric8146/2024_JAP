@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--아이템 정보 추가하는 화면-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!--    touch target size too small은 무시해도 되는것-->
+
+    <EditText
+        android:id="@+id/food_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter food name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/food_date"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="등록일을 입력해주세요"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/food_enddate"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:hint="소비기한을 입력해주세요"
+        android:inputType="number" />
+</LinearLayout>
