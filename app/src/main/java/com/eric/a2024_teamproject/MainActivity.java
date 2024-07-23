@@ -11,13 +11,10 @@ import android.widget.GridView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.eric.a2024_teamproject.databinding.ActivityMainBinding;
-
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityMainBinding binding;
     private ArrayList<FoodItem> items;
     private FoodAdapter adapter;
     private GridView gridView1;
@@ -25,18 +22,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
-
-//        BottomNavigationView navView = findViewById(R.id.nav_view);
-//        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.navigation_home, R.id.navigation_dashboard, R.id.navigation_notifications)
-//                .build();
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
-//        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-//        NavigationUI.setupWithNavController(binding.navView, navController);
-//        setContentView(R.layout.fragment_home);
+        setContentView(R.layout.fragment_home);
 
         // 빈 데이터 리스트 생성
         items = new ArrayList<>();
@@ -96,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
                 int foodDate = Integer.parseInt(foodDateEditText.getText().toString());
                 int foodEnddate = Integer.parseInt(foodEnddateEditText.getText().toString());
                 if (!name.isEmpty()) {
-                    items.add(new FoodItem(name, foodDate, foodEnddate));
+                    int imageResId = getImageResourceId(name);
+                    items.add(new FoodItem(name, foodDate, foodEnddate, imageResId));
                     adapter.notifyDataSetChanged();
                 }
             } catch (NumberFormatException e) {
@@ -128,12 +115,23 @@ public class MainActivity extends AppCompatActivity {
             int foodDate = Integer.parseInt(foodDateEditText.getText().toString());
             int foodEnddate = Integer.parseInt(foodEnddateEditText.getText().toString());
             if (!name.isEmpty()) {
-                items.set(position, new FoodItem(name, foodDate, foodEnddate));
+                int imageResId = getImageResourceId(name);
+                items.set(position, new FoodItem(name, foodDate, foodEnddate, imageResId));
                 adapter.notifyDataSetChanged();
             }
         });
         builder.setNegativeButton("Cancel", null);
         builder.show();
+    }
+
+    private int getImageResourceId(String foodName) {
+        switch (foodName.toLowerCase()) {
+            case "양파":
+                return R.drawable.onion;
+            // Add more cases for different food items and their corresponding images
+            default:
+                return R.drawable.onion; // Default image in case no match is found
+        }
     }
 
     private void filter(String text) {

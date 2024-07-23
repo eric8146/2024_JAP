@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,11 +40,12 @@ public class FoodAdapter extends BaseAdapter {
         ViewHolder holder;
 
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.food_item_layout, parent, false);
+            convertView = inflater.inflate(R.layout.item_food, parent, false);
             holder = new ViewHolder();
-            holder.nameTextView = convertView.findViewById(R.id.food_name);
-            holder.foodDateTextView = convertView.findViewById(R.id.food_date);
-            holder.foodEnddateTextView = convertView.findViewById(R.id.food_enddate);
+            holder.nameTextView = convertView.findViewById(R.id.tv_name);
+            holder.foodImageView = convertView.findViewById(R.id.iv_icon);
+            holder.foodDateTextView = convertView.findViewById(R.id.tv_food_date);
+            holder.foodEnddateTextView = convertView.findViewById(R.id.tv_food_enddate);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -51,8 +53,9 @@ public class FoodAdapter extends BaseAdapter {
 
         FoodItem foodItem = foodList.get(position);
         holder.nameTextView.setText(foodItem.getName());
-        holder.foodDateTextView.setText(String.valueOf(foodItem.getFoodDate()));
-        holder.foodEnddateTextView.setText(String.valueOf(foodItem.getFoodEnddate()));
+        holder.foodImageView.setImageResource(foodItem.getImageResId());
+        holder.foodDateTextView.setText("등록일: " + foodItem.getFoodDate());
+        holder.foodEnddateTextView.setText("소비기한: " + foodItem.getFoodEnddate());
 
         return convertView;
     }
@@ -64,6 +67,7 @@ public class FoodAdapter extends BaseAdapter {
 
     private static class ViewHolder {
         TextView nameTextView;
+        ImageView foodImageView;
         TextView foodDateTextView;
         TextView foodEnddateTextView;
     }

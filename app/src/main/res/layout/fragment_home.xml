@@ -1,40 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ui.home.HomeFragment">
+    android:padding="16dp">
 
-    <!-- 검색 뷰 -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#62DA67"
-        android:focusable="true"
-        android:iconifiedByDefault="false"
-        android:queryHint="검색어를 입력하시오" />
+        android:layout_alignParentTop="true" />
 
-    <!-- 그리드 뷰 -->
     <GridView
         android:id="@+id/gridview1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="#54A9E1"
+        android:layout_below="@id/search"
+        android:layout_above="@id/add_food"
+        android:columnWidth="100dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
         android:horizontalSpacing="10dp"
-        android:numColumns="3"
-        android:verticalSpacing="10dp" />
+        android:stretchMode="columnWidth" />
 
-    <!-- 추가 버튼 -->
     <Button
         android:id="@+id/add_food"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="right"
-        android:text="+"
-        tools:ignore="SpeakableTextPresentCheck" />
-</LinearLayout>
+        android:layout_alignParentBottom="true"
+        android:text="Add Food" />
+
+</RelativeLayout>
