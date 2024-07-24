@@ -15,9 +15,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ArrayList<FoodItem> items;
-    private FoodAdapter adapter;
-    private GridView gridView1;
+    private ArrayList<FoodItem> items; // 식품 항목을 저장하는 ArrayList
+    private FoodAdapter adapter; // GridView에 사용되는 어댑터
+    private GridView gridView1; // GridView 객체
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         gridView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showEditFoodDialog(position);
+                showEditFoodDialog(position); // 항목을 클릭하면 수정 다이얼로그 표시
             }
         });
 
@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAddFoodDialog();
+                showAddFoodDialog(); // 추가 버튼 클릭 시 추가 다이얼로그 표시
             }
         });
 
@@ -59,12 +59,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                filter(newText);
+                filter(newText); // 검색어 변경 시 필터링 수행
                 return false;
             }
         });
     }
 
+    // 음식 추가 다이얼로그 표시
     private void showAddFoodDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -82,18 +83,19 @@ public class MainActivity extends AppCompatActivity {
                 int foodDate = Integer.parseInt(foodDateEditText.getText().toString());
                 int foodEnddate = Integer.parseInt(foodEnddateEditText.getText().toString());
                 if (!name.isEmpty()) {
-                    int imageResId = getImageResourceId(name);
-                    items.add(new FoodItem(name, foodDate, foodEnddate, imageResId));
-                    adapter.notifyDataSetChanged();
+                    int imageResId = getImageResourceId(name); // 음식 이름에 따라 이미지 리소스 ID 가져오기
+                    items.add(new FoodItem(name, foodDate, foodEnddate, imageResId)); // 새로운 FoodItem 추가
+                    adapter.notifyDataSetChanged(); // 어댑터에 데이터 변경 알림
                 }
             } catch (NumberFormatException e) {
-                e.printStackTrace();
+                e.printStackTrace(); // 숫자 형식 예외 처리
             }
         });
         builder.setNegativeButton("Cancel", null);
         builder.show();
     }
 
+    // 음식 수정 다이얼로그 표시
     private void showEditFoodDialog(int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -115,32 +117,37 @@ public class MainActivity extends AppCompatActivity {
             int foodDate = Integer.parseInt(foodDateEditText.getText().toString());
             int foodEnddate = Integer.parseInt(foodEnddateEditText.getText().toString());
             if (!name.isEmpty()) {
-                int imageResId = getImageResourceId(name);
-                items.set(position, new FoodItem(name, foodDate, foodEnddate, imageResId));
-                adapter.notifyDataSetChanged();
+                int imageResId = getImageResourceId(name); // 음식 이름에 따라 이미지 리소스 ID 가져오기
+                items.set(position, new FoodItem(name, foodDate, foodEnddate, imageResId)); // 수정된 FoodItem 설정
+                adapter.notifyDataSetChanged(); // 어댑터에 데이터 변경 알림
             }
         });
         builder.setNegativeButton("Cancel", null);
         builder.show();
     }
 
+    // 음식 이름에 따라 이미지 리소스 ID 반환
     private int getImageResourceId(String foodName) {
         switch (foodName.toLowerCase()) {
             case "양파":
                 return R.drawable.onion;
             // Add more cases for different food items and their corresponding images
+
+
+
             default:
-                return R.drawable.onion; // Default image in case no match is found
+                return R.drawable.apple; // 일치하는 음식이 없을 경우 기본 이미지 반환
         }
     }
 
+    // 검색어에 따라 목록 필터링
     private void filter(String text) {
         ArrayList<FoodItem> filteredList = new ArrayList<>();
         for (FoodItem item : items) {
             if (item.getName().toLowerCase().contains(text.toLowerCase())) {
-                filteredList.add(item);
+                filteredList.add(item); // 검색어가 포함된 항목만 추가
             }
         }
-        adapter.updateList(filteredList);
+        adapter.updateList(filteredList); // 필터링된 목록으로 어댑터 업데이트
     }
 }
